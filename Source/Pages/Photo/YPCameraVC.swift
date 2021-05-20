@@ -207,6 +207,6 @@ public class YPCameraVC: UIViewController, UIGestureRecognizerDelegate, YPPermis
     func refreshFlashButton() {
         let flashImage = photoCapture.currentFlashMode.flashImage()
         v.flashButton.setImage(flashImage, for: .normal)
-        v.flashButton.isHidden = !photoCapture.hasFlash
+        v.flashButton.isHidden = true
     }
 }

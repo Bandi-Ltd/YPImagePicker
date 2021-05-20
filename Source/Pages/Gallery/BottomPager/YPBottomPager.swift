@@ -66,10 +66,12 @@ open class YPBottomPager: UIViewController, UIScrollViewDelegate {
         let scrollableWidth: CGFloat = CGFloat(controllers.count) * CGFloat(viewWidth)
         v.scrollView.contentSize = CGSize(width: scrollableWidth, height: 0)
         
+        let labels = ["Library", "Photo"]
+        
         // Build headers
         for (index, c) in controllers.enumerated() {
             let menuItem = YPMenuItem()
-            menuItem.textLabel.text = c.title?.capitalized
+            menuItem.textLabel.text = labels[index].capitalized
             menuItem.button.tag = index
             menuItem.button.addTarget(self,
                                       action: #selector(tabTapped(_:)),

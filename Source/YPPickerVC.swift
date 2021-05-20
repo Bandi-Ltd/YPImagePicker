@@ -49,6 +49,11 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
 
         view.backgroundColor = YPConfig.colors.safeAreaBackgroundColor
         
+        let navigationBar = navigationController?.navigationBar
+        let navigationBarAppearence = UINavigationBarAppearance()
+        navigationBarAppearence.shadowColor = .clear
+        navigationBar?.scrollEdgeAppearance = navigationBarAppearence
+        
         delegate = self
         
         // Force Library only when using `minNumberOfItems`.

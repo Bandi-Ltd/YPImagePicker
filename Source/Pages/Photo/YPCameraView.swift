@@ -55,7 +55,7 @@ class YPCameraView: UIView, UIGestureRecognizerDelegate {
         let sideMargin: CGFloat = isIphone4 ? 20 : 0
         if YPConfig.onlySquareImagesFromCamera {
             layout(
-                0,
+                10,
                 |-sideMargin-previewViewContainer-sideMargin-|,
                 -2,
                 |progressBar|,
@@ -67,7 +67,7 @@ class YPCameraView: UIView, UIGestureRecognizerDelegate {
             previewViewContainer.heightEqualsWidth()
         } else {
             layout(
-                0,
+                10,
                 |-sideMargin-previewViewContainer-sideMargin-|,
                 -2,
                 |progressBar|,

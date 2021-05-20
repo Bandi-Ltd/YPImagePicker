@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18092"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -53,6 +54,13 @@
                         <constraint firstAttribute="trailing" secondItem="Mc5-1c-z7q" secondAttribute="trailing" id="sKD-NK-t20"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bMF-Y1-7sT">
+                    <rect key="frame" x="0.0" y="0.0" width="400" height="10"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="9Po-iT-xHU"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -61,8 +69,11 @@
                 <constraint firstAttribute="bottom" secondItem="9Cu-Zp-X0j" secondAttribute="bottom" id="94b-v2-S3a"/>
                 <constraint firstItem="90B-0c-ych" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Nqq-tJ-MXy"/>
                 <constraint firstAttribute="trailing" secondItem="9Cu-Zp-X0j" secondAttribute="trailing" id="Uhw-Pi-jJn"/>
+                <constraint firstItem="bMF-Y1-7sT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZtC-dE-7Zx"/>
                 <constraint firstItem="9Cu-Zp-X0j" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="gu4-5B-2qu"/>
                 <constraint firstItem="90B-0c-ych" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="u5j-7G-j99"/>
+                <constraint firstItem="bMF-Y1-7sT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="uYI-Wy-c55"/>
+                <constraint firstAttribute="trailing" secondItem="bMF-Y1-7sT" secondAttribute="trailing" id="x6Q-62-80M"/>
                 <constraint firstItem="9Cu-Zp-X0j" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="zCK-Xd-fZp"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -76,4 +87,9 @@
             <point key="canvasLocation" x="57.600000000000001" y="153.82308845577214"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

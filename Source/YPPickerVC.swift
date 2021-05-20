@@ -46,13 +46,15 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = YPConfig.colors.safeAreaBackgroundColor
         
-        let navigationBar = navigationController?.navigationBar
-        let navigationBarAppearence = UINavigationBarAppearance()
-        navigationBarAppearence.shadowColor = .clear
-        navigationBar?.scrollEdgeAppearance = navigationBarAppearence
+        if #available(iOS 13, *) {
+            let navigationBar = navigationController?.navigationBar
+            let navigationBarAppearence = UINavigationBarAppearance()
+            navigationBarAppearence.shadowColor = .clear
+            navigationBar?.scrollEdgeAppearance = navigationBarAppearence
+        }
         
         delegate = self
         
@@ -72,7 +74,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
             cameraVC = YPCameraVC()
             cameraVC?.didCapturePhoto = { [weak self] img in
                 self?.didSelectItems?([YPMediaItem.photo(p: YPMediaPhoto(image: img,
-                                                                        fromCamera: true))])
+                                                                         fromCamera: true))])
             }
         }
         
@@ -81,9 +83,9 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
             videoVC = YPVideoCaptureVC()
             videoVC?.didCaptureVideo = { [weak self] videoURL in
                 self?.didSelectItems?([YPMediaItem
-                    .video(v: YPMediaVideo(thumbnail: thumbnailFromVideoPath(videoURL),
-                                           videoURL: videoURL,
-                                           fromCamera: true))])
+                                        .video(v: YPMediaVideo(thumbnail: thumbnailFromVideoPath(videoURL),
+                                                               videoURL: videoURL,
+                                                               fromCamera: true))])
             }
         }
         
@@ -177,7 +179,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         } else if let videoVC = vc as? YPVideoCaptureVC {
             videoVC.start()
         }
-    
+        
         updateUI()
     }
     
@@ -220,7 +222,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         label.text = aTitle
         // Use YPConfig font
         label.font = YPConfig.fonts.pickerTitleFont
-
+        
         // Use custom textColor if set by user.
         if let navBarTitleColor = UINavigationBar.appearance().titleTextAttributes?[.foregroundColor] as? UIColor {
             label.textColor = navBarTitleColor
@@ -265,21 +267,21 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     }
     
     func updateUI() {
-		if !YPConfig.hidesCancelButton {
-			// Update Nav Bar state.
+        if !YPConfig.hidesCancelButton {
+            // Update Nav Bar state.
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: imageFromBundle("yp_back").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(close))
-		}
+        }
         switch mode {
         case .library:
             setTitleViewWithTitle(aTitle: libraryVC?.title ?? "")
             
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: imageFromBundle("yp_next").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(done))
             navigationItem.rightBarButtonItem?.tintColor = YPConfig.colors.tintColor
-
+            
             // Disable Next Button until minNumberOfItems is reached.
             navigationItem.rightBarButtonItem?.isEnabled =
-				libraryVC!.selection.count >= YPConfig.library.minNumberOfItems
-
+                libraryVC!.selection.count >= YPConfig.library.minNumberOfItems
+            
         case .camera:
             navigationItem.titleView = nil
             title = cameraVC?.title
@@ -289,7 +291,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
             title = videoVC?.title
             navigationItem.rightBarButtonItem = nil
         }
-
+        
         navigationItem.rightBarButtonItem?.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .normal)
         navigationItem.rightBarButtonItem?.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .disabled)
         navigationItem.leftBarButtonItem?.setFont(font: YPConfig.fonts.leftBarButtonFont, forState: .normal)
@@ -315,7 +317,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                     self?.didSelectItems?([YPMediaItem.photo(p: photo)])
                 }, videoCallback: { video in
                     self?.didSelectItems?([YPMediaItem
-                        .video(v: video)])
+                                            .video(v: video)])
                 }, multipleItemsCallback: { items in
                     self?.didSelectItems?(items)
                 })
@@ -342,7 +344,7 @@ extension YPPickerVC: YPLibraryViewDelegate {
     }
     
     public func libraryViewStartedLoadingImage() {
-		//TODO remove to enable changing selection while loading but needs cancelling previous image requests.
+        //TODO remove to enable changing selection while loading but needs cancelling previous image requests.
         libraryVC?.isProcessing = true
         DispatchQueue.main.async {
             self.libraryVC?.v.fadeInLoader()

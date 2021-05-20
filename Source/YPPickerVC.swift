@@ -53,6 +53,8 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
             let navigationBar = navigationController?.navigationBar
             let navigationBarAppearence = UINavigationBarAppearance()
             navigationBarAppearence.shadowColor = .clear
+            navigationBarAppearence.backgroundColor = YPImagePickerConfiguration.shared.colors.bottomMenuItemBackgroundColor
+            
             navigationBar?.scrollEdgeAppearance = navigationBarAppearence
         }
         

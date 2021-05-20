@@ -217,12 +217,13 @@ public class YPVideoCaptureVC: UIViewController, YPPermissionCheckable {
     
     private func updateUIWith(state: ViewState) {
         func flashImage(for torchMode: FlashMode) -> UIImage {
-            switch torchMode {
-            case .noFlash: return UIImage()
-            case .on: return YPConfig.icons.flashOnIcon
-            case .off: return YPConfig.icons.flashOffIcon
-            case .auto: return YPConfig.icons.flashAutoIcon
-            }
+//            switch torchMode {
+            return UIImage()
+//            case .noFlash: return UIImage()
+//            case .on: return YPConfig.icons.flashOnIcon
+//            case .off: return YPConfig.icons.flashOffIcon
+//            case .auto: return YPConfig.icons.flashAutoIcon
+//            }
         }
         v.flashButton.setImage(flashImage(for: state.flashMode), for: .normal)
         v.flashButton.isEnabled = !state.isRecording

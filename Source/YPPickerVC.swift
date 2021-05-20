@@ -49,15 +49,15 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         
         view.backgroundColor = YPConfig.colors.safeAreaBackgroundColor
         
-        if #available(iOS 13, *) {
-            let navigationBar = navigationController?.navigationBar
-            let navigationBarAppearence = UINavigationBarAppearance()
-            navigationBarAppearence.shadowColor = .clear
-            navigationBarAppearence.backgroundColor = YPImagePickerConfiguration.shared.colors.bottomMenuItemBackgroundColor
-            navigationBarAppearence.titleTextAttributes = [NSAttributedString.Key.font : YPImagePickerConfiguration.shared.fonts.pickerTitleFont, NSAttributedString.Key.foregroundColor : YPImagePickerConfiguration.shared.colors.bottomMenuItemSelectedTextColor]
-            
-            navigationBar?.scrollEdgeAppearance = navigationBarAppearence
-        }
+//        if #available(iOS 13, *) {
+//            let navigationBar = navigationController?.navigationBar
+//            let navigationBarAppearence = UINavigationBarAppearance()
+//            navigationBarAppearence.shadowColor = .clear
+//            navigationBarAppearence.backgroundColor = YPImagePickerConfiguration.shared.colors.bottomMenuItemBackgroundColor
+//            navigationBarAppearence.titleTextAttributes = [NSAttributedString.Key.font : YPImagePickerConfiguration.shared.fonts.pickerTitleFont, NSAttributedString.Key.foregroundColor : YPImagePickerConfiguration.shared.colors.bottomMenuItemSelectedTextColor]
+//            
+//            navigationBar?.scrollEdgeAppearance = navigationBarAppearence
+//        }
         
         delegate = self
         

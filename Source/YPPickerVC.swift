@@ -262,7 +262,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     func updateUI() {
 		if !YPConfig.hidesCancelButton {
 			// Update Nav Bar state.
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: imageFromBundle("yp_back"), style: .plain, target: self, action: #selector(close))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: imageFromBundle("yp_back").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(close))
 		}
         switch mode {
         case .library:

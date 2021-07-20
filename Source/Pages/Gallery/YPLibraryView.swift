@@ -32,6 +32,12 @@ final class YPLibraryView: UIView {
         self.overlayView = overlayView
         if let overlayView = overlayView {
             assetViewContainer.addSubview(overlayView)
+            overlayView.translatesAutoresizingMaskIntoConstraints = false
+            overlayView.topAnchor.constraint(equalTo: assetViewContainer.topAnchor, constant: 0).isActive = true
+            overlayView.bottomAnchor.constraint(equalTo: assetViewContainer.bottomAnchor, constant: 0).isActive = true
+            overlayView.leadingAnchor.constraint(equalTo: assetViewContainer.leadingAnchor, constant: 0).isActive = true
+            overlayView.trailingAnchor.constraint(equalTo: assetViewContainer.trailingAnchor, constant: 0).isActive = true
+            
             overlayView.frame = assetViewContainer.frame
         }
     }

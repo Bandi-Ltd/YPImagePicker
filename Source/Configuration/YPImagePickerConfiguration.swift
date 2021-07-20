@@ -91,6 +91,9 @@ public struct YPImagePickerConfiguration {
     /// Adds a Overlay View to the camera
     public var overlayView: UIView?
 
+    /// Adds a Overlay View to the library
+    public var libraryOverlayView: UIView?
+    
     /// Defines if the navigation bar cancel button should be hidden when showing the picker. Default is false
     public var hidesCancelButton = false
     

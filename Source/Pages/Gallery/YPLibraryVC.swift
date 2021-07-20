@@ -92,6 +92,7 @@ public class YPLibraryVC: UIViewController, YPPermissionCheckable {
     
     public override func loadView() {
         v = YPLibraryView.xibView()
+        v.injectOverlayView(overlayView: YPConfig.overlayView)
         view = v
     }
     

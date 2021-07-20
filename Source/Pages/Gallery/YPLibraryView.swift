@@ -25,6 +25,17 @@ final class YPLibraryView: UIView {
     let line = UIView()
     var shouldShowLoader = false
     
+    private var overlayView: UIView? = nil
+    
+    func injectOverlayView(overlayView: UIView? = nil) {
+        
+        self.overlayView = overlayView
+        if let overlayView = overlayView {
+            assetViewContainer.addSubview(overlayView)
+            overlayView.frame = assetViewContainer.frame
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         

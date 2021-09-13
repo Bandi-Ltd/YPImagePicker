@@ -25,7 +25,7 @@ class YPAssetViewContainer: UIView {
     private let spinner = UIActivityIndicatorView(style: .white)
     private var shouldCropToSquare = YPConfig.library.isSquareByDefault
     private var isMultipleSelection = false
-
+    
     public var itemOverlayType = YPConfig.library.itemOverlayType
     
     override func awakeFromNib() {
@@ -96,7 +96,7 @@ class YPAssetViewContainer: UIView {
     }
     
     // MARK: - Square button
-
+    
     @objc public func squareCropButtonTapped() {
         if let zoomableView = zoomableView {
             let z = zoomableView.zoomScale
@@ -105,7 +105,7 @@ class YPAssetViewContainer: UIView {
         zoomableView?.fitImage(shouldCropToSquare, animated: true)
     }
     
-    public func refreshSquareCropButton() {
+    public func refreshSquareCropButton(storedCropPosition: YPLibrarySelection?) {
         if onlySquare {
             squareCropButton.isHidden = true
         } else {
@@ -115,19 +115,28 @@ class YPAssetViewContainer: UIView {
             }
         }
         
-        let shouldFit = YPConfig.library.onlySquare ? true : shouldCropToSquare
-        zoomableView?.fitImage(shouldFit)
-        zoomableView?.layoutSubviews()
+        if let scale = storedCropPosition?.scrollViewZoomScale {
+            let requiredScale = zoomableView?.calculateSquaredZoomScale() ?? 1
+            if abs(scale - requiredScale) < 0.05 {
+                let shouldFit = YPConfig.library.onlySquare ? true : shouldCropToSquare
+                zoomableView?.fitImage(shouldFit)
+                zoomableView?.layoutSubviews()
+            }
+        } else {
+            let shouldFit = YPConfig.library.onlySquare ? true : shouldCropToSquare
+            zoomableView?.fitImage(shouldFit)
+            zoomableView?.layoutSubviews()
+        }
     }
     
     // MARK: - Multiple selection
-
+    
     /// Use this to update the multiple selection mode UI state for the YPAssetViewContainer
     public func setMultipleSelectionMode(on: Bool) {
         isMultipleSelection = on
         let image = on ? YPConfig.icons.multipleSelectionOnIcon : YPConfig.icons.multipleSelectionOffIcon
         multipleSelectionButton.setImage(image, for: .normal)
-        refreshSquareCropButton()
+        refreshSquareCropButton(storedCropPosition: nil)
     }
 }
 
@@ -174,7 +183,7 @@ extension YPAssetViewContainer: YPAssetZoomableViewDelegate {
 // MARK: - Gesture recognizer Delegate
 extension YPAssetViewContainer: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith
-        otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+                                    otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     

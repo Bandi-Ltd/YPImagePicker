@@ -39,28 +39,36 @@ class YPCropVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupToolbar()
+        //        setupToolbar()
         setupGestureRecognizers()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: imageFromBundle("yp_next").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(done))
+        navigationItem.rightBarButtonItem?.tintColor = YPConfig.colors.tintColor
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: imageFromBundle("yp_back").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(cancel))
+        
+        view.backgroundColor = YPConfig.colors.safeAreaBackgroundColor
+        v.backgroundColor = YPConfig.colors.safeAreaBackgroundColor
     }
     
-    func setupToolbar() {
-        let cancelButton = UIBarButtonItem(title: YPConfig.wordings.cancel,
-                                           style: .plain,
-                                           target: self,
-                                           action: #selector(cancel))
-        cancelButton.tintColor = .ypLabel
-        cancelButton.setFont(font: YPConfig.fonts.leftBarButtonFont, forState: .normal)
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        let saveButton = UIBarButtonItem(title: YPConfig.wordings.save,
-                                           style: .plain,
-                                           target: self,
-                                           action: #selector(done))
-        saveButton.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .normal)
-        saveButton.tintColor = .ypLabel
-        v.toolbar.items = [cancelButton, flexibleSpace, saveButton]
-    }
+    //    func setupToolbar() {
+    //        let cancelButton = UIBarButtonItem(title: YPConfig.wordings.cancel,
+    //                                           style: .plain,
+    //                                           target: self,
+    //                                           action: #selector(cancel))
+    //        cancelButton.tintColor = .ypLabel
+    //        cancelButton.setFont(font: YPConfig.fonts.leftBarButtonFont, forState: .normal)
+    //
+    //        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+    //
+    //        let saveButton = UIBarButtonItem(title: YPConfig.wordings.save,
+    //                                           style: .plain,
+    //                                           target: self,
+    //                                           action: #selector(done))
+    //        saveButton.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .normal)
+    //        saveButton.tintColor = .ypLabel
+    //        v.toolbar.items = [cancelButton, flexibleSpace, saveButton]
+    //    }
     
     func setupGestureRecognizers() {
         // Pinch Gesture
@@ -95,7 +103,7 @@ class YPCropVC: UIViewController {
                                     width: widthCrop * scaleRatio,
                                     height: heightCrop * scaleRatio)
         if let cgImage = image.toCIImage()?.toCGImage(),
-            let imageRef = cgImage.cropping(to: scaledCropRect) {
+           let imageRef = cgImage.cropping(to: scaledCropRect) {
             let croppedImage = UIImage(cgImage: imageRef)
             didFinishCropping?(croppedImage)
         }
@@ -114,7 +122,7 @@ extension YPCropVC: UIGestureRecognizerDelegate {
             var transform = v.imageView.transform
             // Apply zoom level.
             transform = transform.scaledBy(x: sender.scale,
-                                            y: sender.scale)
+                                           y: sender.scale)
             v.imageView.transform = transform
         case .ended:
             pinchGestureEnded()
@@ -183,32 +191,34 @@ extension YPCropVC: UIGestureRecognizerDelegate {
     private func keepImageIntoCropArea() {
         let imageRect = v.imageView.frame
         let cropRect = v.cropArea.frame
-        var correctedFrame = imageRect
+        
+        var dy: CGFloat = 0
+        var dx: CGFloat = 0
         
         // Cap Top.
         if imageRect.minY > cropRect.minY {
-            correctedFrame.origin.y = cropRect.minY
+            dy = imageRect.origin.y - cropRect.minY
         }
         
         // Cap Bottom.
         if imageRect.maxY < cropRect.maxY {
-            correctedFrame.origin.y = cropRect.maxY - imageRect.height
+            dy = imageRect.origin.y - (cropRect.maxY - imageRect.height)
         }
         
         // Cap Left.
         if imageRect.minX > cropRect.minX {
-            correctedFrame.origin.x = cropRect.minX
+            dx = imageRect.origin.x - cropRect.minX
         }
         
         // Cap Right.
         if imageRect.maxX < cropRect.maxX {
-            correctedFrame.origin.x = cropRect.maxX - imageRect.width
+            dx = imageRect.origin.x - (cropRect.maxX - imageRect.width)
         }
         
         // Animate back to allowed bounds
-        if imageRect != correctedFrame {
+        if dx != 0 || dy != 0 {
             UIView.animate(withDuration: 0.3, animations: {
-                self.v.imageView.frame = correctedFrame
+                self.v.imageView.center = CGPoint(x: self.v.imageView.center.x - dx, y: self.v.imageView.center.y - dy)
             })
         }
     }

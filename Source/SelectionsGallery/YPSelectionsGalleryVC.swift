@@ -40,17 +40,17 @@ public class YPSelectionsGalleryVC: UIViewController, YPSelectionsGalleryCellDel
         v.collectionView.delegate = self
         
         // Setup navigation bar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: YPConfig.wordings.next,
-                                                            style: .done,
-                                                            target: self,
-                                                            action: #selector(done))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: imageFromBundle("yp_next").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(done))
         navigationItem.rightBarButtonItem?.tintColor = YPConfig.colors.tintColor
-        navigationItem.rightBarButtonItem?.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .disabled)
-        navigationItem.rightBarButtonItem?.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .normal)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: imageFromBundle("yp_back").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(close))
+        
         navigationController?.navigationBar.setTitleFont(font: YPConfig.fonts.navigationBarTitleFont)
         
         YPHelper.changeBackButtonIcon(self)
         YPHelper.changeBackButtonTitle(self)
+        
+        view.backgroundColor = YPConfig.colors.safeAreaBackgroundColor
     }
 
     @objc
@@ -64,6 +64,11 @@ public class YPSelectionsGalleryVC: UIViewController, YPSelectionsGalleryCellDel
             }
         }
         didFinishHandler?(self, items)
+    }
+    
+    @objc
+    private func close() {
+        navigationController?.popViewController(animated: true)
     }
     
     public func selectionsGalleryCellDidTapRemove(cell: YPSelectionsGalleryCell) {

@@ -73,7 +73,7 @@ class YPCropView: UIView {
     }
     
     private func applyStyle() {
-        backgroundColor = .ypSystemBackground
+        backgroundColor = YPConfig.colors.safeAreaBackgroundColor
         clipsToBounds = true
         imageView.style { i in
             i.isUserInteractionEnabled = true
@@ -92,7 +92,7 @@ class YPCropView: UIView {
     }
     
     func curtainStyle(v: UIView) {
-        v.backgroundColor = UIColor.ypSystemBackground.withAlphaComponent(0.7)
+        v.backgroundColor = YPConfig.colors.safeAreaBackgroundColor
         v.isUserInteractionEnabled = false
     }
 }
